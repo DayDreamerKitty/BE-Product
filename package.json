@@ -1,0 +1,14 @@
+{
+  "name": "BE-Product",
+  "version": "1.0.0",
+  "main": "app.js",
+  "repository": "git@github.com:DayDreamerKitty/BE-Product.git",
+  "author": "Kitty <zainab_97@hotmail.co.uk>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "scripts": {
+    "start": "nodemade app.js"
+  }
+}
