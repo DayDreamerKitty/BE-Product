@@ -35,9 +35,9 @@ const productDelete = async (req, res) => {
   //   return res.status(404).json({ message: "Error" });
   // }
   try {
-    const foundproduct = await Product.findById(req.params.productId);
-    if (product) {
-      await foundproduct.remove();
+    const foundProduct = await Product.findById(req.params.productId);
+    if (Product) {
+      foundProduct.remove();
       return res.status(204).end();
     } else {
       return res.status(404).json({ message: "this product doesn't exist " });
@@ -46,5 +46,18 @@ const productDelete = async (req, res) => {
     console.log("error", error);
   }
 };
+// const productUpdate = async (req, res) => {
+//   try {
+//     const foundProduct = await Product.findById(req.params.productId);
+//     if (Product) {
+//       foundProduct.findOneAndUpdate();
+//       return res.status(204).end();
+//     } else {
+//       return res.status(404).json({ message: "this product doesn't exist " });
+//     }
+//   } catch (error) {
+//     console.log("error", error);
+//   }
+// };
 
 module.exports = { productListFetch, productCreate, productDelete };

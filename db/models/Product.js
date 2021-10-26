@@ -6,8 +6,8 @@ const ProductSchema = mongoose.Schema({
   image: String,
   description: String,
   color: String,
-  quantity: { type: Number },
-  price: { type: Number },
+  quantity: { type: Number, min: 0 },
+  price: { type: Number, default: {} },
 });
 
 module.exports = mongoose.model("Product", ProductSchema);
