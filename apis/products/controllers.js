@@ -1,24 +1,49 @@
-let products = require("../../data");
+const Product = require("../../db/models/Product");
 
-const productListFetch = (req, res) => {
-  return res.json(products);
+const productListFetch = async (req, res) => {
+  // return res.json(products);
+
+  try {
+    const products = await Product.find();
+
+    return res.json(products);
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
-const productCreate = (req, res) => {
-  products.push(req.body);
-  res.json(req.body);
+const productCreate = async (req, res) => {
+  // products.push(req.body);
+  // res.json(req.body);
+  try {
+    const newProduct = await Product.create(req.body);
+    res.status(201).json(newProduct);
+  } catch (error) {
+    console.log("error", error);
+  }
 };
 
-const productDelete = (req, res) => {
-  const productId = req.params.productId;
-  const product = products.find((product) => product.id === +productId);
-  res.json(products);
-  if (product) {
-    products = products.filter((product) => product.id !== +productId);
-    res.status(204);
-    return res.end();
-  } else {
-    return res.status(404).json({ message: "Error" });
+const productDelete = async (req, res) => {
+  // const productId = req.params.productId;
+  // const product = products.find((product) => product.id === +productId);
+  // res.json(products);
+  // if (product) {
+  //   products = products.filter((product) => product.id !== +productId);
+  //   res.status(204);
+  //   return res.end();
+  // } else {
+  //   return res.status(404).json({ message: "Error" });
+  // }
+  try {
+    const foundproduct = await Product.findById(req.params.productId);
+    if (product) {
+      await foundproduct.remove();
+      return res.status(204).end();
+    } else {
+      return res.status(404).json({ message: "this product doesn't exist " });
+    }
+  } catch (error) {
+    console.log("error", error);
   }
 };
 
