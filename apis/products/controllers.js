@@ -2,10 +2,8 @@ const Product = require("../../db/models/Product");
 
 const productListFetch = async (req, res) => {
   // return res.json(products);
-
   try {
     const products = await Product.find();
-
     return res.json(products);
   } catch (error) {
     console.log("error", error);
@@ -46,18 +44,23 @@ const productDelete = async (req, res) => {
     console.log("error", error);
   }
 };
-// const productUpdate = async (req, res) => {
-//   try {
-//     const foundProduct = await Product.findById(req.params.productId);
-//     if (Product) {
-//       foundProduct.findOneAndUpdate();
-//       return res.status(204).end();
-//     } else {
-//       return res.status(404).json({ message: "this product doesn't exist " });
-//     }
-//   } catch (error) {
-//     console.log("error", error);
-//   }
-// };
+const productUpdate = async (req, res) => {
+  try {
+    const foundProduct = await Product.findById(req.params.productId);
+    if (Product) {
+      foundProduct.findOneAndUpdate(req.body);
+      return res.status(204).end();
+    } else {
+      return res.status(404).json({ message: "this product doesn't exist " });
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
 
-module.exports = { productListFetch, productCreate, productDelete };
+module.exports = {
+  productListFetch,
+  productCreate,
+  productDelete,
+  productUpdate,
+};
