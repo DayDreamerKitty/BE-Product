@@ -17,4 +17,11 @@ connectDB();
 app.use((req, res) => {
   res.status(404).json({ message: "PATH NOT FOUND" });
 });
+
+app.use((err, req, res, next) => {
+  res
+    .status(err.status || 500)
+    .json({ message: err.message || "Internal Server Error" });
+});
+
 app.listen(8000, () => console.log("Hello"));
