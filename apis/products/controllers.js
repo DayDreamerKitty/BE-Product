@@ -6,6 +6,7 @@ const productListFetch = async (req, res) => {
     const products = await Product.find();
     return res.json(products);
   } catch (error) {
+    return res.status(500).json({ message: error.message });
     console.log("error", error);
   }
 };
@@ -17,7 +18,7 @@ const productCreate = async (req, res) => {
     const newProduct = await Product.create(req.body);
     res.status(201).json(newProduct);
   } catch (error) {
-    console.log("error", error);
+    return res.status(500).json({ message: error.message });
   }
 };
 
@@ -34,27 +35,32 @@ const productDelete = async (req, res) => {
   // }
   try {
     const foundProduct = await Product.findById(req.params.productId);
-    if (Product) {
-      foundProduct.remove();
+    if (foundProduct) {
+      await foundProduct.remove();
       return res.status(204).end();
     } else {
       return res.status(404).json({ message: "this product doesn't exist " });
     }
   } catch (error) {
-    console.log("error", error);
+    return res.status(500).json({ message: error.message });
   }
 };
 const productUpdate = async (req, res) => {
+  const { productId } = req.params;
   try {
-    const foundProduct = await Product.findById(req.params.productId);
-    if (Product) {
-      foundProduct.findOneAndUpdate(req.body);
-      return res.status(204).end();
+    const product = await Product.findByIdAndUpdate(
+      { _id: productId },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    if (product) {
+      return res.json(product);
+      // res.status(204).end();
     } else {
       return res.status(404).json({ message: "this product doesn't exist " });
     }
   } catch (error) {
-    console.log("error", error);
+    return res.status(500).json({ message: error.message });
   }
 };
 

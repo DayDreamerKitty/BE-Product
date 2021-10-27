@@ -7,7 +7,7 @@ const ProductSchema = mongoose.Schema({
   description: String,
   color: String,
   quantity: { type: Number, min: 0 },
-  price: { type: Number, default: {} },
+  price: { type: Number, default: 564 },
 });
 
 module.exports = mongoose.model("Product", ProductSchema);

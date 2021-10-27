@@ -8,12 +8,12 @@ const {
 
 const router = express.Router();
 
-router.get("/", productListFetch);
-
 router.post("/", productCreate);
 
-router.delete("/:productId", productDelete);
+router.get("/", productListFetch);
 
 router.put("/:productId", productUpdate);
+
+router.delete("/:productId", productDelete);
 
 module.exports = router;
